@@ -3,23 +3,36 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 import { Container } from './styles';
 import { useFood } from '../../hooks/useFood';
 
-export function Food() {
+interface Food {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  available: boolean;
+  image: string;
+}
+
+export function Food({ id, name, description, price, available, image }: Food) {
   const { food, isAvailable, toggleAvailable, setEditingFood } = useFood();
 
   function handleDelete(id: number) {
 
   }
 
+  function getToggleAvailable() {
+
+  }
+
   return (
     <Container available={isAvailable}>
       <header>
-        <img src={food.image} alt={food.name} />
+        <img src={image} alt={name} />
       </header>
       <section className="body">
-        <h2>{food.name}</h2>
-        <p>{food.description}</p>
+        <h2>{name}</h2>
+        <p>{description}</p>
         <p className="price">
-          R$ <b>{food.price}</b>
+          R$ <b>{price}</b>
         </p>
       </section>
       <section className="footer">
@@ -28,7 +41,7 @@ export function Food() {
             type="button"
             className="icon"
             onClick={setEditingFood}
-            data-testid={`edit-food-${food.id}`}
+            data-testid={`edit-food-${id}`}
           >
             <FiEdit3 size={20} />
           </button>
@@ -36,8 +49,8 @@ export function Food() {
           <button
             type="button"
             className="icon"
-            onClick={() => handleDelete(food.id)}
-            data-testid={`remove-food-${food.id}`}
+            onClick={() => handleDelete(id)}
+            data-testid={`remove-food-${id}`}
           >
             <FiTrash size={20} />
           </button>

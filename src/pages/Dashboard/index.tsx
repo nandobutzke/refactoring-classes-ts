@@ -1,13 +1,74 @@
-import { Component } from 'react';
+import { Component, useEffect, useState } from 'react';
 
-import Header from '../../components/Header';
 import api from '../../services/api';
 import { Food } from '../../components/Food';
-import ModalAddFood from '../../components/ModalAddFood';
+import { ModalAddFood } from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
+import { Header } from '../../components/Header';
+import { useFood } from '../../hooks/useFood';
 
-class Dashboard extends Component {
+interface Food {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  available: boolean;
+  image: string;
+}
+
+export function Dashboard() {
+  const { food } = useFood();
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  useEffect(() =>{
+    api.get('/foods').then(response => setFoods(response.data));
+  }, []);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  function handleSetIsOpenModal() {
+    setIsOpenModal(true);
+  }
+  function handleCloseModal() {
+    setIsOpenModal(false);
+  }
+
+  const editingFood = food;
+
+  return (
+    <>
+       <Header openModal={handleSetIsOpenModal} />
+        <ModalAddFood
+          onRequestClose={handleCloseModal}
+          isOpen={isOpenModal}
+        />
+        <ModalEditFood
+          //onRequestClose={handleCloseModal}
+          //isOpen={isOpenModal}
+          //editingFood={editingFood.id}
+          //handleUpdateFood={this.handleUpdateFood}
+        />
+
+        <FoodsContainer data-testid="foods-list">
+          {foods &&
+            foods.map(food => (
+              <Food
+                key={food.id}
+                id={food.id}
+                name={food.name}
+                description={food.description}
+                price={food.price}
+                available={food.available}
+                image={food.image}
+              />
+            ))}
+        </FoodsContainer>
+      </>
+  );
+}
+
+/*class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,4 +179,4 @@ class Dashboard extends Component {
   }
 };
 
-export default Dashboard;
+export default Dashboard;*/

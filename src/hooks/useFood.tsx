@@ -27,10 +27,11 @@ const FoodContext = createContext<FoodContextData>(
 
 export function FoodsProvider({children}: FoodsProviderProps) {
     const [food, setFood] = useState<Food>({} as Food);
+    const [foods, setFoods] = useState<Food[]>([]);
     const [isAvailable, setIsAvailable] = useState<boolean>(false);
     
     useEffect(() => {
-        api.get(`/foods/${food.id}`).then(response => setFood(response.data))
+        api.get(`/foods/${2}`).then(response => setFood(response.data))
     }, []);
 
     async function toggleAvailable() {
