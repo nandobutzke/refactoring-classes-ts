@@ -4,11 +4,7 @@ import { FiCheckSquare } from 'react-icons/fi';
 import { Form } from './styles';
 import { Modal } from '../Modal';
 import Input from '../Input';
-
-interface ModalAddFoodProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-}
+import { ModalAddFoodProps } from '../../@types/types';
 
 export function ModalAddFood({ isOpen, onRequestClose }: ModalAddFoodProps) {
   return (

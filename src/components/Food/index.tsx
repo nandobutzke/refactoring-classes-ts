@@ -2,17 +2,9 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 
 import { Container } from './styles';
 import { useFood } from '../../hooks/useFood';
+import { FoodProps } from '../../@types/types';
 
-interface Food {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  available: boolean;
-  image: string;
-}
-
-export function Food({ id, name, description, price, available, image }: Food) {
+export function Food({ id, name, description, price, available, image }: FoodProps) {
   const { food, isAvailable, toggleAvailable, setEditingFood } = useFood();
 
   function handleDelete(id: number) {

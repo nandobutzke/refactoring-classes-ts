@@ -1,12 +1,7 @@
 import { Component, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import ReactModal, { Props } from 'react-modal';
 import { boolean } from 'yup';
-
-interface ModalProps extends ReactModal.Props {
-  children: ReactNode
-  onRequestClose: () => void;
-  isOpen: boolean;
-}
+import { ModalProps } from '../../@types/types';
 
 export function Modal({children, onRequestClose, isOpen}: ModalProps) {
 

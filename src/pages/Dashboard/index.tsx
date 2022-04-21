@@ -3,23 +3,15 @@ import { Component, useEffect, useState } from 'react';
 import api from '../../services/api';
 import { Food } from '../../components/Food';
 import { ModalAddFood } from '../../components/ModalAddFood';
-import ModalEditFood from '../../components/ModalEditFood';
+import { ModalEditFood } from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 import { Header } from '../../components/Header';
 import { useFood } from '../../hooks/useFood';
-
-interface Food {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  available: boolean;
-  image: string;
-}
+import { FoodProps } from '../../@types/types';
 
 export function Dashboard() {
   const { food } = useFood();
-  const [foods, setFoods] = useState<Food[]>([]);
+  const [foods, setFoods] = useState<FoodProps[]>([]);
 
   useEffect(() =>{
     api.get('/foods').then(response => setFoods(response.data));
@@ -44,9 +36,9 @@ export function Dashboard() {
           isOpen={isOpenModal}
         />
         <ModalEditFood
-          //onRequestClose={handleCloseModal}
-          //isOpen={isOpenModal}
-          //editingFood={editingFood.id}
+          isOpen={isOpenModal}
+          onRequestClose={handleCloseModal}
+          editingFood={editingFood}
           //handleUpdateFood={this.handleUpdateFood}
         />
 
