@@ -5,14 +5,15 @@ import { useFood } from '../../hooks/useFood';
 import { FoodProps } from '../../@types/types';
 
 export function Food({ id, name, description, price, available, image }: FoodProps) {
-  const { food, isAvailable, toggleAvailable, setEditingFood } = useFood();
+  const { food, isAvailable, toggleAvailable, handleEditFood, handleOpenEditFoodModal } = useFood();
 
   function handleDelete(id: number) {
 
   }
 
-  function getToggleAvailable() {
-
+  function setEditingFood() {
+    handleEditFood(food);
+    handleOpenEditFoodModal(true);
   }
 
   return (

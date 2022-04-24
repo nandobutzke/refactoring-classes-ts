@@ -10,34 +10,46 @@ import { useFood } from '../../hooks/useFood';
 import { FoodProps } from '../../@types/types';
 
 export function Dashboard() {
-  const { food } = useFood();
+  const { food, openEditModal, handleOpenEditFoodModal } = useFood();
   const [foods, setFoods] = useState<FoodProps[]>([]);
 
   useEffect(() =>{
     api.get('/foods').then(response => setFoods(response.data));
   }, []);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalAddFood, setIsOpenModalAddFood] = useState(false);
+  const [isOpenModalEditFood, setIsOpenModalEditFood] = useState(false);
 
-  function handleSetIsOpenModal() {
-    setIsOpenModal(true);
+
+
+  function handleSetIsOpenModalAddFood() {
+    setIsOpenModalAddFood(true);
   }
-  function handleCloseModal() {
-    setIsOpenModal(false);
+
+  function handleCloseModalAddFood() {
+    setIsOpenModalAddFood(false);
+  }
+
+  function handleSetIsOpenModalEditFood() {
+    handleOpenEditFoodModal(true);
+  }
+
+  function handleCloseModalEditFood() {
+    handleOpenEditFoodModal(false);
   }
 
   const editingFood = food;
 
   return (
     <>
-       <Header openModal={handleSetIsOpenModal} />
+       <Header openModal={handleSetIsOpenModalAddFood} />
         <ModalAddFood
-          onRequestClose={handleCloseModal}
-          isOpen={isOpenModal}
+          isOpen={isOpenModalAddFood}
+          onRequestClose={handleCloseModalAddFood}
         />
         <ModalEditFood
-          isOpen={isOpenModal}
-          onRequestClose={handleCloseModal}
+          isOpen={openEditModal}
+          onRequestClose={handleCloseModalEditFood}
           editingFood={editingFood}
           //handleUpdateFood={this.handleUpdateFood}
         />
