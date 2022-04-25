@@ -4,7 +4,7 @@ import { Container } from './styles';
 import { useFood } from '../../hooks/useFood';
 import { FoodProps } from '../../@types/types';
 
-export function Food({ id, name, description, price, available, image }: FoodProps) {
+export function Food(props: FoodProps) {
   const { food, isAvailable, toggleAvailable, handleEditFood, handleOpenEditFoodModal } = useFood();
 
   function handleDelete(id: number) {
@@ -12,20 +12,20 @@ export function Food({ id, name, description, price, available, image }: FoodPro
   }
 
   function setEditingFood() {
-    handleEditFood(food);
+    handleEditFood(props);
     handleOpenEditFoodModal(true);
   }
 
   return (
     <Container available={isAvailable}>
       <header>
-        <img src={image} alt={name} />
+        <img src={props.image} alt={props.name} />
       </header>
       <section className="body">
-        <h2>{name}</h2>
-        <p>{description}</p>
+        <h2>{props.name}</h2>
+        <p>{props.description}</p>
         <p className="price">
-          R$ <b>{price}</b>
+          R$ <b>{props.price}</b>
         </p>
       </section>
       <section className="footer">
@@ -34,7 +34,7 @@ export function Food({ id, name, description, price, available, image }: FoodPro
             type="button"
             className="icon"
             onClick={setEditingFood}
-            data-testid={`edit-food-${id}`}
+            data-testid={`edit-food-${props.id}`}
           >
             <FiEdit3 size={20} />
           </button>
@@ -42,8 +42,8 @@ export function Food({ id, name, description, price, available, image }: FoodPro
           <button
             type="button"
             className="icon"
-            onClick={() => handleDelete(id)}
-            data-testid={`remove-food-${id}`}
+            onClick={() => handleDelete(props.id)}
+            data-testid={`remove-food-${props.id}`}
           >
             <FiTrash size={20} />
           </button>
@@ -52,13 +52,13 @@ export function Food({ id, name, description, price, available, image }: FoodPro
         <div className="availability-container">
           <p>{isAvailable ? 'Disponível' : 'Indisponível'}</p>
 
-          <label htmlFor={`available-switch-${food.id}`} className="switch">
+          <label htmlFor={`available-switch-${props.id}`} className="switch">
             <input
-              id={`available-switch-${food.id}`}
+              id={`available-switch-${props.id}`}
               type="checkbox"
               checked={isAvailable}
               onChange={toggleAvailable}
-              data-testid={`change-status-food-${food.id}`}
+              data-testid={`change-status-food-${props.id}`}
             />
             <span className="slider" />
           </label>

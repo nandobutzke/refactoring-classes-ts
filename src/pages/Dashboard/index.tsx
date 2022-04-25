@@ -20,8 +20,6 @@ export function Dashboard() {
   const [isOpenModalAddFood, setIsOpenModalAddFood] = useState(false);
   const [isOpenModalEditFood, setIsOpenModalEditFood] = useState(false);
 
-
-
   function handleSetIsOpenModalAddFood() {
     setIsOpenModalAddFood(true);
   }
@@ -56,15 +54,10 @@ export function Dashboard() {
 
         <FoodsContainer data-testid="foods-list">
           {foods &&
-            foods.map(food => (
+            foods.map(props => (
               <Food
-                key={food.id}
-                id={food.id}
-                name={food.name}
-                description={food.description}
-                price={food.price}
-                available={food.available}
-                image={food.image}
+                key={props.id}
+                {...props}
               />
             ))}
         </FoodsContainer>

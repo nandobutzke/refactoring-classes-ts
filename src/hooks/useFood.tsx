@@ -49,8 +49,8 @@ export function FoodsProvider({children}: FoodsProviderProps) {
         setIsAvailable(!isAvailable);
     }
 
-    async function handleEditFood(editingFood: Food) {
-        setEditingFood(editingFood);
+    async function handleEditFood(food: Food) {
+        setEditingFood(food);
     }
 
     async function handleOpenEditFoodModal(openEditModal: boolean) {
