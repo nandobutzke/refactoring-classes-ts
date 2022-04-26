@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import api from '../../services/api';
 import { Food } from '../../components/Food';
@@ -10,7 +10,7 @@ import { useFood } from '../../hooks/useFood';
 import { FoodProps } from '../../@types/types';
 
 export function Dashboard() {
-  const { food, openEditModal, handleOpenEditFoodModal } = useFood();
+  const { editingFood, openEditModal, handleOpenEditFoodModal } = useFood();
   const [foods, setFoods] = useState<FoodProps[]>([]);
 
   useEffect(() =>{
@@ -18,7 +18,6 @@ export function Dashboard() {
   }, []);
 
   const [isOpenModalAddFood, setIsOpenModalAddFood] = useState(false);
-  const [isOpenModalEditFood, setIsOpenModalEditFood] = useState(false);
 
   function handleSetIsOpenModalAddFood() {
     setIsOpenModalAddFood(true);
@@ -28,15 +27,9 @@ export function Dashboard() {
     setIsOpenModalAddFood(false);
   }
 
-  function handleSetIsOpenModalEditFood() {
-    handleOpenEditFoodModal(true);
-  }
-
   function handleCloseModalEditFood() {
     handleOpenEditFoodModal(false);
   }
-
-  const editingFood = food;
 
   return (
     <>

@@ -15,10 +15,10 @@ interface Food {
 }
 
 interface FoodContextData {
-    food: Food;
+    editingFood: Food;
     isAvailable: boolean;
-    toggleAvailable: () => Promise<void>;
-    handleEditFood: (editingFood: Food) => Promise<void>;
+    toggleAvailable: (food: Food) => Promise<void>;
+    handleEditFood: (editingFood: Food, openEditModal: boolean) => Promise<void>;
     openEditModal: boolean;
     handleOpenEditFoodModal: (openEditModal: boolean) => Promise<void>;
 }
@@ -37,20 +37,21 @@ export function FoodsProvider({children}: FoodsProviderProps) {
     const [openEditModal, setOpenEditModal] = useState(false);
     
     useEffect(() => {
-        api.get(`/foods/${2}`).then(response => setFood(response.data))
+        //api.get(`/foods/${2}`).then(response => setFood(response.data));
     }, []);
 
-    async function toggleAvailable() {
+    async function toggleAvailable(food: Food) {
         await api.put(`/foods/${food.id}`, {
             ...food,
             available: !isAvailable,
         });
 
-        setIsAvailable(!isAvailable);
+        setIsAvailable(!food.available);
     }
 
-    async function handleEditFood(food: Food) {
-        setEditingFood(food);
+    async function handleEditFood(selectedEditingFood: Food, openEditModal: boolean) {
+        setEditingFood(selectedEditingFood);
+        setOpenEditModal(!openEditModal);
     }
 
     async function handleOpenEditFoodModal(openEditModal: boolean) {
@@ -58,7 +59,7 @@ export function FoodsProvider({children}: FoodsProviderProps) {
     }
 
     return (
-        <FoodContext.Provider value={{ food, isAvailable, toggleAvailable, handleEditFood, openEditModal, handleOpenEditFoodModal }}>
+        <FoodContext.Provider value={{ editingFood, isAvailable, toggleAvailable, handleEditFood, openEditModal, handleOpenEditFoodModal }}>
             {children}
         </FoodContext.Provider>
     );  

@@ -1,6 +1,4 @@
-import { Component, Dispatch, ReactNode, SetStateAction, useState } from 'react';
-import ReactModal, { Props } from 'react-modal';
-import { boolean } from 'yup';
+import ReactModal from 'react-modal';
 import { ModalProps } from '../../@types/types';
 
 export function Modal({children, onRequestClose, isOpen}: ModalProps) {
