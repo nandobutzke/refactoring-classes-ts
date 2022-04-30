@@ -18,6 +18,7 @@ interface FoodContextData {
     foods: Food[]
     editingFood: Food;
     handleEditFood: (editingFood: Food, openEditModal: boolean) => Promise<void>;
+    handleUpdateFood: (updatingFood: Food) => Promise<void>;
     handleDeleteFood: (foodId: number) => Promise<void>;
     openEditModal: boolean;
     handleOpenEditFoodModal: (openEditModal: boolean) => Promise<void>;
@@ -51,12 +52,26 @@ export function FoodsProvider({children}: FoodsProviderProps) {
         await api.delete(`/foods/${foodId}`);
     }
 
+    async function handleUpdateFood(food: Food) {
+        try {
+            const foodUpdated = await api.put(`/foods/${food.id}`, {...editingFood, ...food});
+            
+            const foodsUpdated = foods.map(f =>
+                f.id !== foodUpdated.data.id ? f : foodUpdated.data,
+            );
+
+            setFoods(foodsUpdated);
+        } catch (err) {
+            console.log(err);
+        } 
+    }
+
     async function handleOpenEditFoodModal(openEditModal: boolean) {
         setOpenEditModal(openEditModal);
     }
 
     return (
-        <FoodContext.Provider value={{ foods, editingFood, handleEditFood, handleDeleteFood, openEditModal, handleOpenEditFoodModal }}>
+        <FoodContext.Provider value={{ foods, editingFood, handleEditFood, handleUpdateFood, handleDeleteFood, openEditModal, handleOpenEditFoodModal }}>
             {children}
         </FoodContext.Provider>
     );  

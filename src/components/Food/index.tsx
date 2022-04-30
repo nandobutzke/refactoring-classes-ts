@@ -15,14 +15,14 @@ export function Food(food: FoodProps) {
 
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
 
-    async function toggleAvailable(selectedFood: FoodProps) {
-        await api.put(`/foods/${selectedFood.id}`, {
-            ...selectedFood,
-            available: !isAvailable,
-        });
+  async function toggleAvailable(selectedFood: FoodProps) {
+    await api.put(`/foods/${selectedFood.id}`, {
+        ...selectedFood,
+        available: !isAvailable,
+    });
 
-        setIsAvailable(!isAvailable);
-    }
+    setIsAvailable(!isAvailable);
+  }
 
   return (
     <Container available={!isAvailable}>

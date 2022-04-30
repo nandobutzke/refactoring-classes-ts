@@ -8,7 +8,8 @@ import { FoodProps } from '../../@types/types';
 interface ModalEditFoodProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  editingFood: FoodProps
+  editingFood: FoodProps;
+  handleModalUpdateFood: (food: FoodProps) => void;
 }
 
 export function ModalEditFood({ isOpen, onRequestClose, editingFood }: ModalEditFoodProps) {

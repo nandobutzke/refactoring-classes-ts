@@ -7,9 +7,10 @@ import { ModalEditFood } from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 import { Header } from '../../components/Header';
 import { useFood } from '../../hooks/useFood';
+import { FoodProps } from '../../@types/types';
 
 export function Dashboard() {
-  const { foods, editingFood, openEditModal, handleOpenEditFoodModal } = useFood();
+  const { foods, editingFood, handleUpdateFood, openEditModal, handleOpenEditFoodModal } = useFood();
 
   const [isOpenModalAddFood, setIsOpenModalAddFood] = useState(false);
 
@@ -21,8 +22,12 @@ export function Dashboard() {
     setIsOpenModalAddFood(false);
   }
 
-  function handleDescagar() {
+  function handleCloseEditModal() {
     handleOpenEditFoodModal(false);
+  }
+
+  function handleModalUpdateFood(food: FoodProps) {
+    handleUpdateFood(food);
   }
 
   return (
@@ -34,9 +39,9 @@ export function Dashboard() {
         />
         <ModalEditFood
           isOpen={openEditModal}
-          onRequestClose={handleDescagar}
+          onRequestClose={handleCloseEditModal}
           editingFood={editingFood}
-          //handleUpdateFood={this.handleUpdateFood}
+          handleModalUpdateFood={handleModalUpdateFood}
         />
 
         <FoodsContainer data-testid="foods-list">
