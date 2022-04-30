@@ -12,11 +12,18 @@ interface ModalEditFoodProps {
   handleModalUpdateFood: (food: FoodProps) => void;
 }
 
-export function ModalEditFood({ isOpen, onRequestClose, editingFood }: ModalEditFoodProps) {
+export function ModalEditFood({ isOpen, onRequestClose, editingFood, handleModalUpdateFood}: ModalEditFoodProps) {
+  
+  async function handleSubmit(data: FoodProps) {
+    handleModalUpdateFood(data);
+  }
+
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <Form onSubmit={onRequestClose} initialData={editingFood}>
+      <Form onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
+        <Input name="id" type="hidden" value={editingFood.id} />
+
         <Input name="image" placeholder="Cole o link aqui" />
 
         <Input name="name" placeholder="Ex: Moda Italiana" />
