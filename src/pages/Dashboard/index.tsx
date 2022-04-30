@@ -10,7 +10,7 @@ import { useFood } from '../../hooks/useFood';
 import { FoodProps } from '../../@types/types';
 
 export function Dashboard() {
-  const { foods, editingFood, handleUpdateFood, openEditModal, handleOpenEditFoodModal } = useFood();
+  const { foods, editingFood, openEditModal, handleUpdateFood, handleOpenEditFoodModal } = useFood();
 
   const [isOpenModalAddFood, setIsOpenModalAddFood] = useState(false);
 
