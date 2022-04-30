@@ -7,15 +7,9 @@ import { ModalEditFood } from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 import { Header } from '../../components/Header';
 import { useFood } from '../../hooks/useFood';
-import { FoodProps } from '../../@types/types';
 
 export function Dashboard() {
-  const { editingFood, openEditModal, handleOpenEditFoodModal } = useFood();
-  const [foods, setFoods] = useState<FoodProps[]>([]);
-
-  useEffect(() =>{
-    api.get('/foods').then(response => setFoods(response.data));
-  }, []);
+  const { foods, editingFood, openEditModal, handleOpenEditFoodModal } = useFood();
 
   const [isOpenModalAddFood, setIsOpenModalAddFood] = useState(false);
 
@@ -27,7 +21,7 @@ export function Dashboard() {
     setIsOpenModalAddFood(false);
   }
 
-  function handleCloseModalEditFood() {
+  function handleDescagar() {
     handleOpenEditFoodModal(false);
   }
 
@@ -40,7 +34,7 @@ export function Dashboard() {
         />
         <ModalEditFood
           isOpen={openEditModal}
-          onRequestClose={handleCloseModalEditFood}
+          onRequestClose={handleDescagar}
           editingFood={editingFood}
           //handleUpdateFood={this.handleUpdateFood}
         />

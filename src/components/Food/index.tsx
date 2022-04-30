@@ -3,12 +3,26 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 import { Container } from './styles';
 import { useFood } from '../../hooks/useFood';
 import { FoodProps } from '../../@types/types';
-
+import api from '../../services/api';
+import { useState } from 'react';
 
 export function Food(food: FoodProps) {
-  const { isAvailable, toggleAvailable, handleEditFood, openEditModal } = useFood();
+  const { handleEditFood, handleDeleteFood, openEditModal } = useFood();
 
-  function handleDelete(id: number) {}
+  function handleDelete(id: number) {
+    handleDeleteFood(id);
+  }
+
+  const [isAvailable, setIsAvailable] = useState<boolean>(false);
+
+    async function toggleAvailable(selectedFood: FoodProps) {
+        await api.put(`/foods/${selectedFood.id}`, {
+            ...selectedFood,
+            available: !isAvailable,
+        });
+
+        setIsAvailable(!isAvailable);
+    }
 
   return (
     <Container available={!isAvailable}>

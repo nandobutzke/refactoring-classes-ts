@@ -8,6 +8,7 @@ import {
 import { useField } from '@unform/core';
 
 import { Container } from './styles';
+import { IconBase } from 'react-icons';
 
 const Input = ({ name, ...rest }) => {
   const inputRef = useRef(null);
@@ -37,7 +38,7 @@ const Input = ({ name, ...rest }) => {
 
   return (
     <Container isFilled={isFilled} isFocused={isFocused}>
-      {/* Icon && <Icon size={20} />*/}
+      {IconBase && <IconBase size={20} />}
 
       <input
         onFocus={handleInputFocus}
