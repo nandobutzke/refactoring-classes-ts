@@ -7,13 +7,13 @@ import api from '../../services/api';
 import { useState } from 'react';
 
 export function Food(food: FoodProps) {
-  const { handleEditFood, handleDeleteFood, openEditModal } = useFood();
+  const { handleEditFood, handleDeleteFood } = useFood();
 
   function handleDelete(id: number) {
     handleDeleteFood(id);
   }
 
-  const [isAvailable, setIsAvailable] = useState<boolean>(false);
+  const [isAvailable, setIsAvailable] = useState<boolean>(true);
 
   async function toggleAvailable(selectedFood: FoodProps) {
     await api.put(`/foods/${selectedFood.id}`, {
@@ -21,7 +21,7 @@ export function Food(food: FoodProps) {
         available: !isAvailable,
     });
 
-    setIsAvailable(!isAvailable);
+    setIsAvailable((prevState) => !prevState);
   }
 
   return (
@@ -41,7 +41,7 @@ export function Food(food: FoodProps) {
           <button
             type="button"
             className="icon"
-            onClick={() => handleEditFood(food, openEditModal)}
+            onClick={() => handleEditFood(food)}
             data-testid={`edit-food-${food.id}`}
           >
             <FiEdit3 size={20} />

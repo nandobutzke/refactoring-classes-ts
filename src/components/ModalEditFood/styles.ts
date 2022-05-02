@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { Form as Unform } from '@unform/web';
-import Input from '../Input';
 
 export const Form = styled(Unform)`
   padding: 48px 40px;
   display: flex;
   flex-direction: column;
+
+  .input-hidden {
+    display: none;
+  }
 
   h1 {
     font-weight: 600;

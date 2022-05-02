@@ -10,7 +10,7 @@ import { useField } from '@unform/core';
 import { Container } from './styles';
 import { IconBase } from 'react-icons';
 
-const Input = ({ name, ...rest }) => {
+export const Input = ({ name, ...rest }) => {
   const inputRef = useRef(null);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -50,5 +50,3 @@ const Input = ({ name, ...rest }) => {
     </Container>
   );
 };
-
-export default Input;

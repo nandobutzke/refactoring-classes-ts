@@ -17,7 +17,7 @@ interface Food {
 interface FoodContextData {
     foods: Food[]
     editingFood: Food;
-    handleEditFood: (editingFood: Food, openEditModal: boolean) => Promise<void>;
+    handleEditFood: (editingFood: Food) => Promise<void>;
     handleUpdateFood: (updatingFood: Food) => Promise<void>;
     handleDeleteFood: (foodId: number) => Promise<void>;
     openEditModal: boolean;
@@ -40,9 +40,9 @@ export function FoodsProvider({children}: FoodsProviderProps) {
         api.get('/foods').then(response => setFoods(response.data));
       }, []);
 
-    async function handleEditFood(selectedEditingFood: Food, openEditModal: boolean) {
+    async function handleEditFood(selectedEditingFood: Food) {
         setEditingFood(selectedEditingFood);
-        setOpenEditModal(!openEditModal);
+        setOpenEditModal((prevState) => !prevState);
     }
 
     async function handleDeleteFood(foodId: number) {
