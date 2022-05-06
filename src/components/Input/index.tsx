@@ -1,17 +1,30 @@
-import {
+import React, {
   useEffect,
   useRef,
   useState,
   useCallback,
+  LegacyRef,
+  RefCallback,
+  MutableRefObject,
+  RefObject,
+  InputHTMLAttributes,
 } from 'react';
 
-import { useField } from '@unform/core';
+import { useField, UnformField } from '@unform/core';
 
 import { Container } from './styles';
 import { IconBase } from 'react-icons';
 
-export const Input = ({ name, ...rest }) => {
-  const inputRef = useRef(null);
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  ref?: RefObject<HTMLInputElement>
+  current?: {
+    value: null;
+  }
+}
+
+export const Input = ({ name, ...rest }: InputProps) => {
+  const inputRef: InputProps["ref"] = useRef(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -44,8 +57,8 @@ export const Input = ({ name, ...rest }) => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
-        ref={inputRef}
         {...rest}
+        ref={inputRef}
       />
     </Container>
   );
