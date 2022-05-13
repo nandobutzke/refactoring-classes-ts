@@ -1,15 +1,22 @@
-import { createRef, useState } from 'react';
 import { FiCheckSquare } from 'react-icons/fi';
 
 import { Form } from './styles';
 import { Modal } from '../Modal';
 import { Input } from '../Input';
-import { ModalAddFoodProps } from '../../@types/types';
+import { FoodProps, ModalAddFoodProps } from '../../@types/types';
+import { useFood } from '../../hooks/useFood';
 
 export function ModalAddFood({ isOpen, onRequestClose }: ModalAddFoodProps) {
+  const { handleAddFood } = useFood();
+
+  function handleSubmit(data: FoodProps) {
+    handleAddFood(data);
+    onRequestClose();
+  }
+
   return (
     <Modal onRequestClose={onRequestClose} isOpen={isOpen} >
-      <Form onSubmit={onRequestClose}>
+      <Form onSubmit={handleSubmit}>
         <h1>Novo Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />
 

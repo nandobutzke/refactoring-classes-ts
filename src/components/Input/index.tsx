@@ -3,21 +3,18 @@ import React, {
   useRef,
   useState,
   useCallback,
-  LegacyRef,
-  RefCallback,
-  MutableRefObject,
-  RefObject,
   InputHTMLAttributes,
+  Ref,
 } from 'react';
 
-import { useField, UnformField } from '@unform/core';
+import { useField } from '@unform/core';
 
 import { Container } from './styles';
 import { IconBase } from 'react-icons';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  ref?: RefObject<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>
   current?: {
     value: null;
   }

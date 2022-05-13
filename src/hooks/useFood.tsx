@@ -1,24 +1,17 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { FoodProps } from "../@types/types";
 import api from "../services/api";
 
 interface FoodsProviderProps {
     children: ReactNode;
 }
 
-interface Food {
-    id: number;
-    name: string;
-    description: string;
-    price: string;
-    available: boolean;
-    image: string;
-}
-
 interface FoodContextData {
-    foods: Food[]
-    editingFood: Food;
-    handleEditFood: (editingFood: Food) => Promise<void>;
-    handleUpdateFood: (updatingFood: Food) => Promise<void>;
+    foods: FoodProps[]
+    editingFood: FoodProps;
+    handleAddFood: (food: FoodProps) => Promise<void>;
+    handleEditFood: (editingFood: FoodProps) => Promise<void>;
+    handleUpdateFood: (updatingFood: FoodProps) => Promise<void>;
     handleDeleteFood: (foodId: number) => Promise<void>;
     openEditModal: boolean;
     handleOpenEditFoodModal: (openEditModal: boolean) => Promise<void>;
@@ -29,10 +22,9 @@ const FoodContext = createContext<FoodContextData>(
 );
 
 export function FoodsProvider({children}: FoodsProviderProps) {
-    const [food, setFood] = useState<Food>({} as Food);
-    const [foods, setFoods] = useState<Food[]>([]);
+    const [foods, setFoods] = useState<FoodProps[]>([]);
     
-    const [editingFood, setEditingFood] = useState<Food>({} as Food);
+    const [editingFood, setEditingFood] = useState<FoodProps>({} as FoodProps);
     
     const [openEditModal, setOpenEditModal] = useState(false);
     
@@ -40,7 +32,20 @@ export function FoodsProvider({children}: FoodsProviderProps) {
         api.get('/foods').then(response => setFoods(response.data));
       }, []);
 
-    async function handleEditFood(selectedEditingFood: Food) {
+    async function handleAddFood(food: FoodProps) {
+        try {
+            const response = await api.post('/foods', {
+                ...food,
+                available: true,
+            });
+        
+            setFoods([...foods, response.data]);
+        } catch (err) {
+        console.log(err);
+        }
+    }
+
+    async function handleEditFood(selectedEditingFood: FoodProps) {
         setEditingFood(selectedEditingFood);
         setOpenEditModal((prevState) => !prevState);
     }
@@ -52,7 +57,7 @@ export function FoodsProvider({children}: FoodsProviderProps) {
         await api.delete(`/foods/${foodId}`);
     }
 
-    async function handleUpdateFood(food: Food) {
+    async function handleUpdateFood(food: FoodProps) {
         try {
             const foodUpdated = await api.put(`/foods/${food.id}`, {...editingFood, ...food});
             
@@ -71,7 +76,7 @@ export function FoodsProvider({children}: FoodsProviderProps) {
     }
 
     return (
-        <FoodContext.Provider value={{ foods, editingFood, handleEditFood, handleUpdateFood, handleDeleteFood, openEditModal, handleOpenEditFoodModal }}>
+        <FoodContext.Provider value={{ foods, editingFood, handleAddFood, handleEditFood, handleUpdateFood, handleDeleteFood, openEditModal, handleOpenEditFoodModal }}>
             {children}
         </FoodContext.Provider>
     );  

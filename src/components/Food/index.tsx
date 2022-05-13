@@ -21,6 +21,7 @@ export function Food(food: FoodProps) {
         available: !isAvailable,
     });
 
+
     setIsAvailable((prevState) => !prevState);
   }
 
