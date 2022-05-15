@@ -18,12 +18,12 @@ export function ModalAddFood({ isOpen, onRequestClose }: ModalAddFoodProps) {
     <Modal onRequestClose={onRequestClose} isOpen={isOpen} >
       <Form onSubmit={handleSubmit}>
         <h1>Novo Prato</h1>
-        <Input name="image" placeholder="Cole o link aqui" />
+        <Input name="image" placeholder="Cole o link aqui" required />
 
-        <Input name="name" placeholder="Ex: Moda Italiana" />
-        <Input name="price" placeholder="Ex: 19.90" />
+        <Input name="name" placeholder="Ex: Moda Italiana" required />
+        <Input name="price" placeholder="Ex: 19.90" required />
 
-        <Input name="description" placeholder="Descrição" />
+        <Input name="description" placeholder="Descrição" required />
         <button type="submit" data-testid="add-food-button">
           <p className="text">Adicionar Prato</p>
           <div className="icon">

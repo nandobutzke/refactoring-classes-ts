@@ -4,6 +4,8 @@ import { Form } from './styles';
 import { Modal } from '../Modal';
 import { Input } from '../Input';
 import { FoodProps } from '../../@types/types';
+import { useRef } from 'react';
+import { FormHandles } from '@unform/core';
 
 interface ModalEditFoodProps {
   isOpen: boolean;
@@ -13,18 +15,17 @@ interface ModalEditFoodProps {
 }
 
 export function ModalEditFood({ isOpen, onRequestClose, editingFood, handleModalUpdateFood}: ModalEditFoodProps) {
+  const formRef = useRef<FormHandles>(null);
   
-  async function handleSubmit(data: FoodProps) {
-    handleModalUpdateFood(data);
+  const handleSubmit = (data: FoodProps) =>  {
+    handleModalUpdateFood({...data, id: editingFood.id});
     onRequestClose();
   }
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <Form onSubmit={handleSubmit} initialData={editingFood}>
+      <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
-        <Input className="input-hidden" name="id" type="hidden" value={editingFood.id} />
-
         <Input name="image" placeholder="Cole o link aqui" />
 
         <Input name="name" placeholder="Ex: Moda Italiana" />

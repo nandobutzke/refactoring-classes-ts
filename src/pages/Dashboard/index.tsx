@@ -29,8 +29,8 @@ export function Dashboard() {
   }
 
   return (
-    <>
-       <Header openModal={handleSetIsOpenModalAddFood} />
+      <>
+        <Header openModal={handleSetIsOpenModalAddFood} />
         <ModalAddFood
           isOpen={isOpenModalAddFood}
           onRequestClose={handleCloseModalAddFood}

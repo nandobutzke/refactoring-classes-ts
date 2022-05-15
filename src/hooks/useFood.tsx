@@ -9,11 +9,11 @@ interface FoodsProviderProps {
 interface FoodContextData {
     foods: FoodProps[]
     editingFood: FoodProps;
+    openEditModal: boolean;
     handleAddFood: (food: FoodProps) => Promise<void>;
     handleEditFood: (editingFood: FoodProps) => Promise<void>;
     handleUpdateFood: (updatingFood: FoodProps) => Promise<void>;
     handleDeleteFood: (foodId: number) => Promise<void>;
-    openEditModal: boolean;
     handleOpenEditFoodModal: (openEditModal: boolean) => Promise<void>;
 }
 
@@ -23,12 +23,10 @@ const FoodContext = createContext<FoodContextData>(
 
 export function FoodsProvider({children}: FoodsProviderProps) {
     const [foods, setFoods] = useState<FoodProps[]>([]);
-    
     const [editingFood, setEditingFood] = useState<FoodProps>({} as FoodProps);
-    
     const [openEditModal, setOpenEditModal] = useState(false);
     
-    useEffect(() =>{
+    useEffect(() => {
         api.get('/foods').then(response => setFoods(response.data));
       }, []);
 

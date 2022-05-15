@@ -6,10 +6,6 @@ export const Form = styled(Unform)`
   display: flex;
   flex-direction: column;
 
-  .input-hidden {
-    display: none;
-  }
-
   h1 {
     font-weight: 600;
     font-size: 36px;

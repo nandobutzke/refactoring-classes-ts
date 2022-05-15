@@ -31,13 +31,13 @@ export const Container = styled.div<InputContainerProps>`
     css`
       color: #ff9000;
       border-color: #ff9000;
-    `}
+  `}
 
   ${props =>
     props.isFilled &&
     css`
       color: #ff9000;
-    `}
+  `}
 
   input {
     flex: 1;
